@@ -1,0 +1,12 @@
+div{
+    width: 100%;
+    border: 2px black solid;
+    height: 300px;
+    margin-bottom: 30px;
+}
+
+header{
+    width: 100%;
+    margin-bottom: 50px;
+    border-bottom: 2px black solid;
+}

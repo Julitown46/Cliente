@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablita</title>
+    <link rel="stylesheet" href="./tablita.css">
+</head>
+<body>
+    
+    <table id="tabla">
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Age</th>
+        <th>Alive</th>
+        <th>Delete</th>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>huevos</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+        </tr>
+    </table>
+
+    <form action="persona">
+        <label for="name">Name: </label>
+        <input type="text" id="name">
+        <label for="surname">Surname: </label>
+        <input type="text" id="surname">
+        <label for="age">Age: </label>
+        <input type="text" id="age">
+        <label for="alive">Alive:</label>
+        <input type="checkbox" id="alive">
+        <button id="enviar">Ok</button>
+    </form>
+
+    <div id="info"></div>
+    <script src="./tablita.js"></script>
+</body>
+</html>
