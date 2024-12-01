@@ -1,0 +1,18 @@
+.accordion-button {
+    background-color: #6c757d;
+    color: white;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #495057;
+    color: white;
+}
+
+.accordion-item {
+    border: 1px solid #6c757d;
+}
+
+.sub-accordion .accordion-button {
+    background-color: #17a2b8;
+    color: white;
+}
