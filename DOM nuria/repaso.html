@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+    <link rel="stylesheet" href="repaso.css">
+</head>
+
+<body>
+    <h1>Repaso de los cojones</h1>
+    <form action="" id="formulario" onsubmit="validarFormulario(event)">
+        <label for="name">Nombre</label>
+        <input type="text" id="nombre" name="nombre" required>
+        <br>
+        <label for="password">Contrasenya</label>
+        <input type="password" id="contrasenya" name="contrasenya" required>
+        <br>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email">
+        <br>
+        <p>Comidas preferidas</p>
+        <label for="Pizza">Pizza</label>
+        <input type="checkbox" id="pizza" name="pizza" value="Pizza">
+        <label for="Burger">Burger</label>
+        <input type="checkbox" id="burger" name="burger" value="Burger">
+        <label for="Caca">Caca</label>
+        <input type="checkbox" id="caca" name="caca" value="Caca">
+        <br>
+        <p>Sexo</p>
+        <label for="masculino">Masculino</label>
+        <input type="radio" id="masculino" name="sexo" value="masculino">
+        <label for="femenino">femenino</label>
+        <input type="radio" id="femenino" name="sexo" value="femenino">
+        <label for="otros">Otros</label>
+        <input type="radio" id="otros" name="sexo" value="otros">
+        <br>
+        <p>Porque haces esto?</p>
+        <textarea name="razon" id="razon">Razon...</textarea>
+        <br>
+        <label for="deporte">Deporte favorito</label>
+        <select name="deporte" id="deporte">
+            <option value=""></option>
+            <option value="badminton">badminton</option>
+            <option value="padel">padel</option>
+            <option value="surf">surf</option>
+        </select>
+        <br>
+        <label for="contacto">Como te contacto?</label>
+        <input list="contactos" name="contacto" id="contacto">
+        <datalist id="contactos">
+            <option value="email">email</option>
+            <option value="telefono">telefono</option>
+            <option value="sms">sms</option>
+        </datalist>
+        <br>
+        <button type="submit" value="Enviar">enviar...</button>
+    </form>
+    <script src="validar.js"></script>
+</body>
+
+</html>
