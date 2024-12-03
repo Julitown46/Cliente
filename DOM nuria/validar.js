@@ -3,7 +3,7 @@ function validarFormulario(event) {
 
     // Variables para los campos
     let nombre = document.getElementById("nombre").value;
-    let password = document.getElementById("contrasenya")
+    let password = document.getElementById("contrasenya").value;
     let email = document.getElementById("email").value;
 
     // Regex para validar el email y teléfono
