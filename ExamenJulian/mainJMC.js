@@ -140,7 +140,7 @@ function cargarPelis(event) {
         document.getElementById(`button${peli.Title}`).addEventListener("click", () => {
             cargarDetalles(peli);
             const card = document.getElementById(`${peli.Title}`);
-            card.style.backgroundColor = "green";
+            card.classList.add("bg-danger");
         });
     });
 }
