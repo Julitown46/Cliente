@@ -37,7 +37,7 @@ function cargarGeneros() {
     genders.forEach(gender => {
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
-        checkbox.value = gender.toLowerCase();
+        checkbox.value = gender;
         checkbox.classList.add("form-check-input");
         const label = document.createElement("label");
         label.textContent = gender;
@@ -105,14 +105,13 @@ function cargarPelis(event) {
 
     const paisSelected = document.getElementById("selectCountries").value;
     const generoSelected = Array.from(document.querySelectorAll("#sitioCheckbox input[type='checkbox']:checked"))
-        .map(checkbox => checkbox.value.toLowerCase());
+        .map(checkbox => checkbox.value);
     const selectedYearStart = parseInt(document.getElementById("selectYearPrimero").value);
     const selectedYearEnd = parseInt(document.getElementById("selectYearFinal").value);
 
     const pelisFiltradas = pelis.filter(peli => {
-
         const pais = paisSelected === "todos" || peli.Country.includes(paisSelected);
-        const generos = generoSelected.length === 0 || generoSelected.some(g => peli.Genre.toLowerCase().includes(g));
+        const generos = generoSelected.length === 0 || generoSelected.some(g => peli.Genre.includes(g));
         const year = (!isNaN(selectedYearStart) ? parseInt(peli.Year) >= selectedYearStart : true) &&
             (!isNaN(selectedYearEnd) ? parseInt(peli.Year) <= selectedYearEnd : true);
 
@@ -120,21 +119,15 @@ function cargarPelis(event) {
         const textDirector = document.getElementById("checkDirector").checked;
         const textActor = document.getElementById("checkActors").checked;
 
-        let conditions = [];
+        let elecciones = [];
 
-        if (textTitulo) {
-            conditions.push(peli.Title.toLowerCase().includes(texto));
-        }
-        if (textDirector) {
-            conditions.push(peli.Director.toLowerCase().includes(texto));
-        }
-        if (textActor) {
-            conditions.push(peli.Actors.toLowerCase().includes(texto));
-        }
+        if (textTitulo) elecciones.push(peli.Title.toLowerCase().includes(texto));
+        if (textDirector) elecciones.push(peli.Director.toLowerCase().includes(texto));
+        if (textActor) elecciones.push(peli.Actors.toLowerCase().includes(texto));
 
-        const textMatches = conditions.length === 0 || conditions.some(condition => condition);
+        const buscaTexto = elecciones.length === 0 || elecciones.includes(true);
 
-        return pais && generos && year && textMatches;
+        return pais && generos && year && buscaTexto;
     });
 
     pelisFiltradas.forEach(peli => {
