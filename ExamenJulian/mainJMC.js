@@ -98,10 +98,7 @@ function cargarPelis(event) {
 
     const texto = document.getElementById("titulo").value.trim().toLowerCase();
 
-    if (!texto) {
-        alert("Pon texto");
-        return;
-    }
+    if (!texto) alert("Pon texto");
 
     const paisSelected = document.getElementById("selectCountries").value;
     const generoSelected = Array.from(document.querySelectorAll("#sitioCheckbox input[type='checkbox']:checked"))
