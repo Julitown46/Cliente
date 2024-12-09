@@ -148,9 +148,14 @@ function cargarPelis(event) {
 document.getElementById("mostrar").addEventListener("click", cargarPelis);
 
 function cargarDetalles(peli) {
+
+    const botonDetalles = document.getElementById(`button${peli.Title}`);
+    botonDetalles.disabled = true;
+
     const detallesTarjeta = document.getElementById(`detalles${peli.Title}`);
 
     detallesTarjeta.innerHTML = `
+    <button id="cerrar">X</button>
     <h6>IMDb Rating</h6>
         <label for="imdbInput${peli.Title}"> </label>
         <input type="text" id="imdbInput${peli.Title}" value="${peli.imdbRating || ''}">
@@ -162,5 +167,12 @@ function cargarDetalles(peli) {
         const nuevoRating = document.getElementById(`imdbInput${peli.Title}`).value;
         peli.imdbRating = nuevoRating;
         cargarDetalles(peli);
+    });
+
+    document.getElementById("cerrar").addEventListener("click", () => {
+        detallesTarjeta.innerHTML = ``;
+        const card = document.getElementById(`${peli.Title}`);
+        card.classList.remove("bg-danger");
+        botonDetalles.disabled = false;
     });
 }
