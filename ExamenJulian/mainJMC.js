@@ -7,14 +7,14 @@ window.onload = function () {
 function cargarPaises() {
     const selectCountries = document.getElementById("selectCountries");
 
-    const option = document.createElement("option");
+    let option = document.createElement("option");
     option.value = "todos";
     option.textContent = "All Countries";
     selectCountries.appendChild(option);
 
     countries.forEach(country => {
-        const option = document.createElement("option");
-        option.value = country.toLowerCase;
+        option = document.createElement("option");
+        option.value = country;
         option.textContent = country;
         selectCountries.appendChild(option);
     });
@@ -96,7 +96,34 @@ function cargarPelis(event) {
     const sitioTarjetas = document.getElementById("tarjetas");
     sitioTarjetas.innerHTML = '';
 
-    pelis.forEach(peli => {
+    const texto = document.getElementById("titulo").value.trim().toLowerCase();
+
+    if (!texto) {
+        alert("Pon texto");
+        return;
+    }
+
+    const paisSelected = document.getElementById("selectCountries").value;
+    const generoSelected = Array.from(document.querySelectorAll("#sitioCheckbox input[type='checkbox']:checked"))
+    .map(checkbox => checkbox.value.toLowerCase());
+    const selectedYearStart = parseInt(document.getElementById("selectYearPrimero").value);
+    const selectedYearEnd = parseInt(document.getElementById("selectYearFinal").value);
+
+    const pelisFiltradas = pelis.filter(peli =>{
+
+        const pais = paisSelected === "todos" || peli.Country.includes(paisSelected);
+        const generos = generoSelected.length === 0 || generoSelected.some(g => peli.Genre.toLowerCase().includes(g));
+        const year = (!isNaN(selectedYearStart) ? parseInt(peli.Year) >= selectedYearStart : true) &&
+                            (!isNaN(selectedYearEnd) ? parseInt(peli.Year) <= selectedYearEnd : true);
+
+    const textTitulo = document.getElementById("checkTitulo").checked ? peli.Title.toLowerCase().includes(texto) : true;
+    const textDirector = document.getElementById("checkDirector").checked ? peli.Director.toLowerCase().includes(texto) : true;
+    const textActor = document.getElementById("checkActors").checked ? peli.Actors.toLowerCase().includes(texto) : true;
+
+    return pais && generos && year && textTitulo && textDirector && textActor;
+    });
+
+    pelisFiltradas.forEach(peli => {
         const col = document.createElement('div');
         col.classList.add('col');
 
@@ -143,6 +170,13 @@ function cargarPelis(event) {
             card.classList.add("bg-danger");
         });
     });
+
+    if (pelisFiltradas.length === 0) {
+        const noResults = document.createElement("p");
+        noResults.textContent = "No movies found matching the selected criteria.";
+        noResults.classList.add("text-center", "text-muted");
+        sitioTarjetas.appendChild(noResults);
+    }
 }
 
 document.getElementById("mostrar").addEventListener("click", cargarPelis);
@@ -155,7 +189,7 @@ function cargarDetalles(peli) {
     const detallesTarjeta = document.getElementById(`detalles${peli.Title}`);
 
     detallesTarjeta.innerHTML = `
-    <button id="cerrar">X</button>
+    <button id="cerrar${peli.Title}">X</button>
     <h6>IMDb Rating</h6>
         <label for="imdbInput${peli.Title}"> </label>
         <input type="text" id="imdbInput${peli.Title}" value="${peli.imdbRating || ''}">
@@ -169,7 +203,7 @@ function cargarDetalles(peli) {
         cargarDetalles(peli);
     });
 
-    document.getElementById("cerrar").addEventListener("click", () => {
+    document.getElementById(`cerrar${peli.Title}`).addEventListener("click", () => {
         detallesTarjeta.innerHTML = ``;
         const card = document.getElementById(`${peli.Title}`);
         card.classList.remove("bg-danger");
