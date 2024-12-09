@@ -105,22 +105,36 @@ function cargarPelis(event) {
 
     const paisSelected = document.getElementById("selectCountries").value;
     const generoSelected = Array.from(document.querySelectorAll("#sitioCheckbox input[type='checkbox']:checked"))
-    .map(checkbox => checkbox.value.toLowerCase());
+        .map(checkbox => checkbox.value.toLowerCase());
     const selectedYearStart = parseInt(document.getElementById("selectYearPrimero").value);
     const selectedYearEnd = parseInt(document.getElementById("selectYearFinal").value);
 
-    const pelisFiltradas = pelis.filter(peli =>{
+    const pelisFiltradas = pelis.filter(peli => {
 
         const pais = paisSelected === "todos" || peli.Country.includes(paisSelected);
         const generos = generoSelected.length === 0 || generoSelected.some(g => peli.Genre.toLowerCase().includes(g));
         const year = (!isNaN(selectedYearStart) ? parseInt(peli.Year) >= selectedYearStart : true) &&
-                            (!isNaN(selectedYearEnd) ? parseInt(peli.Year) <= selectedYearEnd : true);
+            (!isNaN(selectedYearEnd) ? parseInt(peli.Year) <= selectedYearEnd : true);
 
-    const textTitulo = document.getElementById("checkTitulo").checked ? peli.Title.toLowerCase().includes(texto) : true;
-    const textDirector = document.getElementById("checkDirector").checked ? peli.Director.toLowerCase().includes(texto) : true;
-    const textActor = document.getElementById("checkActors").checked ? peli.Actors.toLowerCase().includes(texto) : true;
+        const textTitulo = document.getElementById("checkTitulo").checked;
+        const textDirector = document.getElementById("checkDirector").checked;
+        const textActor = document.getElementById("checkActors").checked;
 
-    return pais && generos && year && textTitulo && textDirector && textActor;
+        let conditions = [];
+
+        if (textTitulo) {
+            conditions.push(peli.Title.toLowerCase().includes(texto));
+        }
+        if (textDirector) {
+            conditions.push(peli.Director.toLowerCase().includes(texto));
+        }
+        if (textActor) {
+            conditions.push(peli.Actors.toLowerCase().includes(texto));
+        }
+
+        const textMatches = conditions.length === 0 || conditions.some(condition => condition);
+
+        return pais && generos && year && textMatches;
     });
 
     pelisFiltradas.forEach(peli => {
@@ -172,10 +186,9 @@ function cargarPelis(event) {
     });
 
     if (pelisFiltradas.length === 0) {
-        const noResults = document.createElement("p");
-        noResults.textContent = "No movies found matching the selected criteria.";
-        noResults.classList.add("text-center", "text-muted");
-        sitioTarjetas.appendChild(noResults);
+        const sinResultados = document.createElement("p");
+        sinResultados.textContent = "No hay peliculas asi";
+        sitioTarjetas.appendChild(sinResultados);
     }
 }
 
