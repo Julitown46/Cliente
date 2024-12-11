@@ -12,54 +12,38 @@ const person2 = {
     "emancipado": false
 }
 
-const nombreDiv = document.getElementById("nombre");
-const edadDiv = document.getElementById("edad");
-const aficionesDiv = document.getElementById("aficiones");
-const emancipadoDiv = document.getElementById("emancipado");
+window.onload = crearFormulario(person);
 
-window.onload = crearFormulario(person2);
+function crearFormulario(object) {
+    const formulario = document.getElementById("formulario");
 
-function crearFormulario(objeto) {
+    for (const [key, value] of Object.entries(object)) {
+        const label = document.createElement("label");
+        label.textContent = `${key}: `;
+        formulario.appendChild(label);
 
-    const nombreLabel = document.createElement("label");
-    nombreLabel.textContent = "Nombre:";
-    let inputNombre = document.createElement("input");
-    inputNombre.type = "text";
-    inputNombre.value = Object.values(objeto)[0];
-    nombreDiv.appendChild(nombreLabel);
-    nombreDiv.appendChild(inputNombre);
-
-    const edadLabel = document.createElement("label");
-    edadLabel.textContent = "Edad:";
-    let edadInput = document.createElement("input");
-    edadInput.type = "number";
-    edadInput.value = Object.values(objeto)[1];
-    edadDiv.appendChild(edadLabel);
-    edadDiv.appendChild(edadInput);
-
-    const aficionesLabel = document.createElement("label");
-    aficionesLabel.textContent = "Aficiones: ";
-    aficionesDiv.appendChild(aficionesLabel);
-    Object.values(objeto)[2].forEach(aficion => {
-        let aficionInput = document.createElement("button");
-        aficionInput.textContent = aficion;
-        aficionInput.value = aficion;
-        aficionesDiv.appendChild(aficionInput);
-    });
-
-    const emancipadoLabel = document.createElement("label");
-    emancipadoLabel.textContent = "Emancipado: ";
-    const empancipadoInput = document.createElement("input");
-    empancipadoInput.type = "checkbox";
-    empancipadoInput.value = Object.values(objeto)[3];
-    if (Object.values(objeto)[3]) {
-        empancipadoInput.checked = true;
-        empancipadoInput.addEventListener("change", () => { empancipadoInput.checked = true; });
-    } else {
-        empancipadoInput.checked = false;
-        empancipadoInput.addEventListener("change", () => { empancipadoInput.checked = false; });
+        if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+            const input = document.createElement("input");
+            input.value = value;
+            if (typeof value === "boolean") {
+                input.checked = value;
+                input.type = "checkbox";
+                input.addEventListener("change", () => {
+                    input.checked = value;
+                });
+            } else {
+                input.type = typeof value;
+            }
+            formulario.appendChild(input);
+        } else if (Array.isArray(value)) {
+            const select = document.createElement("select");
+            value.forEach(opcionValue => {
+                const opcion = document.createElement("option");
+                opcion.value = opcionValue;
+                opcion.textContent = opcionValue;
+                select.appendChild(opcion);
+            });
+            formulario.appendChild(select);
+        }
     }
-
-    emancipadoDiv.appendChild(emancipadoLabel);
-    emancipadoDiv.appendChild(empancipadoInput);
 }
