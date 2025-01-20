@@ -3,7 +3,7 @@ console.log('Inicio de programa');
 document.getElementById("ciudad").addEventListener("change", function() {
     let q = this.value;
     let apiKey = '6b32863e8f5c47bd91a91158250801';
-    let url = "https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${q}";
+    let url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${q}`;
 
     let miPromesa = new Promise((resolve, reject) => {
         fetch(url)
@@ -21,12 +21,10 @@ document.getElementById("ciudad").addEventListener("change", function() {
 
     miPromesa
         .then((resultado) => {
-            // Aquí muestro la información de la API en la consola
             console.log('Resultado:', resultado);
             
-            // Y aquí en el html
             document.getElementById("weather-img").src = resultado.current.condition.icon;
-            document.getElementById("weather-info").textContent = "Temperatura: ${resultado.current.temp_c}°C, Condición: ${resultado.current.condition.text}";
+            document.getElementById("weather-info").textContent = `Temperatura: ${resultado.current.temp_c}°C, Condición: ${resultado.current.condition.text}`;
 
         })
         .catch((error) => {

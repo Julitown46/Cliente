@@ -3,9 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>tiempo</title>
+    <title>Consulta de Clima</title>
 </head>
 <body>
+    <h1>Consulta de Clima</h1>
+
+    <label for="ciudad">Selecciona una ciudad:</label>
+    <select id="ciudad">
+        <option value="" disabled selected>Elige una ciudad</option>
+        <option value="Madrid">Madrid</option>
+        <option value="New York">New York</option>
+        <option value="Tokyo">Tokyo</option>
+        <option value="London">London</option>
+    </select>
+
+    <div id="resultado">
+        <h2>Información del Clima</h2>
+        <img id="weather-img" src="" alt="weather-img">
+        <p id="weather-info">Selecciona una ciudad para ver el clima.</p>
+    </div>
 
     <script src="tiempo.js"></script>
 </body>
